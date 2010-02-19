@@ -23,6 +23,8 @@ sub imported_moose_symbols { qw( confess blessed ) }
 
 sub import_symbols_from { 'Moose' }
 
+sub add_metaclass_option_customizations { }
+
 around default_inner => sub {
     return [
         WithKeyword->new(identifier => 'with'),
@@ -49,9 +51,11 @@ after setup_inner_for => sub {
 after add_namespace_customizations => sub {
     my ($self, $ctx, $package) = @_;
 
+    my @metaclass = $ctx->options->{metaclass} ? (-metaclass => $ctx->options->{metaclass}[0]) : ();
+
     # add Moose initializations to preamble
     $ctx->add_preamble_code_parts(
-        sprintf 'use %s qw( %s )', $self->import_symbols_from($ctx), join ' ', $self->imported_moose_symbols($ctx),
+        sprintf 'use %s qw( %s )', $self->import_symbols_from($ctx), join ' ', $self->imported_moose_symbols($ctx), @metaclass
     );
 
     # make class immutable unless specified otherwise

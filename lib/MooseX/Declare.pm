@@ -110,6 +110,12 @@ Sets a superclass for the class being declared.
 
 Applies a role or roles to the class being declared.
 
+=item metaclass
+
+    class Foo metaclass My::Meta::Class { ... }
+
+Sets the class to use for the class meta object
+
 =item is mutable
 
     class Foo is mutable { ... }
@@ -143,6 +149,12 @@ It's possible to specify options for roles:
     role Foo with Bar { ... }
 
 Applies a role to the role being declared.
+
+=item metaclass
+
+    role Foo metaclass My::Meta::Class { ... }
+
+Sets the class to use for the role meta object
 
 =back
 

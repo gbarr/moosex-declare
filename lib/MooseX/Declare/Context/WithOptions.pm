@@ -33,11 +33,11 @@ sub strip_options {
         }
 
         croak "unknown option name '$key'"
-            unless $key =~ /^(extends|with|is)$/;
+            unless $key =~ /^(extends|with|is|metaclass)$/;
 
         my $val = $self->strip_name;
         if (!defined $val) {
-            if (defined($val = $self->strip_proto)) {
+            if ($key ne 'metaclass' && defined($val = $self->strip_proto)) {
                 $val = [split /\s*,\s*/, $val];
             }
             else {
